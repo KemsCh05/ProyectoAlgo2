@@ -377,3 +377,183 @@ void Agregar_Ayudante(Registro_Ayudantes *Lista, int ID, char *nombre, char *pue
     }    
     printf("Se registro el ayudante exitosamente \n");
 }
+void modificar_datos_ayudante(Registro_Ayudantes *Lista, int ID, int seleccion){
+    Ayudante *puntero = Lista->Inicio;
+    int validacion = 0;
+
+    // Ciclo para buscar en la lista de ayudantes un ayudante que coincida con el ID ingresado que se modificará/eliminará
+    while (puntero != NULL)
+    {
+
+        // En caso de que se encuentre el ayudante que coincide con el ID ingresado
+        if (puntero->ID == ID){
+            validacion++;
+
+            // En caso de que se desee modificar los datos
+            if (seleccion == 1){
+                int a = 0;
+                int seleccion2;
+
+                // Este ciclo se repetirá hasta que el usuario ingrese un número de opción válido
+                while(a == 0){
+
+                    // Se consulta al usuario el dato que desea modificar
+                    printf("Ingrese 1 para modificar el ID del ayudante \nIngrese 2 para modificar el nombre del ayudante \nIngrese 3 para modificar el puesto del ayudante \nIngrese 4 para modificar las funciones del ayudante \nIngrese 5 para modificar la fecha en que empezo a trabajar el ayudante \nIngrese 6 para cancelar \n");
+                    scanf("%i", seleccion2);
+
+                    // En caso de que se desee modificar la identificación
+                    if (seleccion2 == 1)
+                    {
+                        int ID2;
+                        printf("Ingrese la nueva identificacion del ayudante: \n");
+                        scanf("%i", &ID2);
+                        puntero->ID = ID2;
+                        printf("Se modifico la identificacion del ayudante exitosamente \n");
+                        a++;
+                    }
+
+                    // En caso de que se desee modificar el nombre
+                    else if (seleccion2 == 2)
+                    {
+                        char nombre[60];
+                        printf("Ingrese el nuevo nombre del ayudante: \n");
+                        scanf("%s", &nombre);
+                        strcpy(puntero->nombre, nombre);
+                        printf("Se modifico el nombre del ayudante exitosamente \n");
+                        a++;
+                    }
+
+                    // En caso de que se desee modificar el puesto
+                    else if (seleccion2 == 3)
+                    {
+                        char puesto[40];
+                        printf("Ingrese el nuevo puesto del ayudante: \n");
+                        scanf("%s", &puesto);
+                        strcpy(puntero->puesto, puesto);
+                        printf("Se modifico el puesto del ayudante exitosamente \n");
+                        a++;
+                    }
+
+                    // En caso de que se desee modificar las funciones del puesto
+                    else if (seleccion2 == 4)
+                    {
+                        int cant;
+                        printf("Ingrese la cantidad de funciones que desea agregar: \n");
+                        scanf("%i", &cant);
+                        int i;
+                        for ( i = 0; i < cant; i++)
+                        {
+                            char funcion[60]; 
+                            printf("Ingrese la funcion %i: \n", i+1);
+                            scanf("%s", &funcion);
+                            strcpy(puntero->funciones[i], funcion);
+                        }
+                        printf("Se modifico las funciones del ayudante exitosamente \n");
+                        a++;
+                    }
+
+                    // En caso de que se desee modificar la fecha en que inició a trabajar
+                    else if (seleccion2 == 5)
+                    {
+                        char fecha[40];
+                        printf("Ingrese la nueva fecha en que empezo a trabajar el ayudante: \n");
+                        scanf("%s", &fecha);
+                        strcpy(puntero->fecha, fecha);
+                        printf("Se modifico la fecha del ayudante exitosamente \n");
+                        a++;
+                    }
+
+                    // En caso de que se desee cancelar
+                    else if (seleccion2 == 6)
+                    {
+                        printf("No se ha modificado ningun dato \n");
+                        a++;
+                    }
+                    
+                    // En caso de que se ingrese un dato inválido
+                    else
+                    {
+                        printf("El numero de opcion ingresada no es valida \n");
+                    } 
+                } 
+            }
+
+            // En caso de que se desee eliminar un dato
+            if (seleccion == 2){
+                int a = 0;
+                int seleccion2;
+
+                // Este ciclo se repetirá hasta que el usuario ingrese un número de opción válido
+                while(a == 0){
+
+                    // Se consulta al usuario el dato que desea eliminar
+                    printf("Ingrese 1 para eliminar el ID del ayudante \nIngrese 2 para eliminar el nombre del ayudante \nIngrese 3 para eliminar el puesto del ayudante \nIngrese 4 para eliminar las funciones del ayudante \nIngrese 5 para eliminar la fecha en que empezo a trabajar el ayudante \nIngrese 6 para cancelar \n");
+                    scanf("%i", seleccion2);
+
+                    // En caso de que se desee eliminar la identificación
+                    if (seleccion2 == 1)
+                    {
+                        puntero->ID = 0;
+                        printf("Se elimino la identificacion del ayudante exitosamente \n");
+                        a++;
+                    }
+
+                    // En caso de que se desee eliminar el nombre
+                    else if (seleccion2 == 2)
+                    {
+                        strcpy(puntero->nombre, "");
+                        printf("Se elimino el nombre del ayudante exitosamente \n");
+                        a++;
+                    }
+
+                    // En caso de que se desee eliminar el puesto
+                    else if (seleccion2 == 3)
+                    {
+                        strcpy(puntero->puesto, "");
+                        printf("Se elimino el puesto del ayudante exitosamente \n");
+                        a++;
+                    }
+
+                    // En caso de que se desee eliminar las funciones
+                    else if (seleccion2 == 4)
+                    {
+                        int cant = puntero->cant;
+                        int i;
+                        for ( i = 0; i < cant; i++)
+                        {
+                            strcpy(puntero->funciones[i], "");
+                        }
+                        printf("Se eliminaron las funciones del ayudante exitosamente \n");
+                        a++;
+                    }
+
+                    // En caso de que se desee eliminar la fecha en que inició a trabajar
+                    else if (seleccion2 == 5)
+                    {
+                        strcpy(puntero->fecha, "");
+                        printf("Se elimino la fecha del ayudante exitosamente \n");
+                        a++;
+                    }
+
+                    // En caso de que se desee cancelar
+                    else if (seleccion2 == 6)
+                    {
+                        printf("No se ha eliminado ningun dato \n");
+                        a++;
+                    }
+                    
+                    // En caso de que la opción ingresada no sea válida
+                    else
+                        printf("El numero de opcion ingresada no es valida \n");
+                } 
+            }
+        }
+        puntero = puntero->siguiente;
+    }
+
+    // En caso de que no se encuentre un ayudante que coincida con el ID ingresado se notifica el error
+    if (validacion == 0)
+    {
+        printf("No se pudo modificar o eliminar la informacion pues la identificacion ingresada no corresponde a la de ningun ayudante registrado \n");
+    }
+}
