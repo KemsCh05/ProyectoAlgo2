@@ -301,3 +301,23 @@ void modificar_datos_nino(Registro_Ninos *Lista, int ID, int seleccion){
     if (validacion == 0)
         printf("No se pudo modificar o eliminar la informacion pues la identificacion ingresada no corresponde a la de ningun nino registrado \n");
 }
+typedef struct ayudantes Ayudante;
+typedef struct Registros2 Registro_Ayudantes;
+
+struct ayudantes
+{
+    Ayudante *siguiente;
+    int ID;
+    char nombre[60];
+    char puesto[25];
+    char funciones[6][60];
+    char fecha[11];
+    int cant;
+    int cantidad_procesadas;
+};
+
+struct Registros2
+{
+    Ayudante *Inicio;
+    Ayudante *Final;
+};
