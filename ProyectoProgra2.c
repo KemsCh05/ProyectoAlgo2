@@ -321,3 +321,26 @@ struct Registros2
     Ayudante *Inicio;
     Ayudante *Final;
 };
+
+Ayudante *CrearAyudante(int ID, char *nombre, char *puesto, char funciones[6][60], char *fecha, int cant){
+
+    //Se crea un nuevo nodo apartando el espacio en memoria
+    Ayudante *NuevoAyudante = (Ayudante *) malloc(sizeof(Ayudante));
+    NuevoAyudante->siguiente = NULL;
+
+    //Agregamos los datos
+    NuevoAyudante->ID = ID;
+    strcpy(NuevoAyudante->nombre, nombre); 
+    strcpy(NuevoAyudante->puesto, puesto); 
+    strcpy(NuevoAyudante->fecha, fecha);
+    NuevoAyudante->cant = cant;
+    NuevoAyudante->cantidad_procesadas = 0;
+    int i;
+    for (i = 0; i < cant; i++)
+    {
+        strcpy(NuevoAyudante->funciones[i], funciones[i]);
+    }
+
+    //Devolvemos el nodo creado
+    return NuevoAyudante; 
+}
