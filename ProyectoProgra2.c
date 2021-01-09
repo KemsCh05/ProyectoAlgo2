@@ -557,3 +557,48 @@ void modificar_datos_ayudante(Registro_Ayudantes *Lista, int ID, int seleccion){
         printf("No se pudo modificar o eliminar la informacion pues la identificacion ingresada no corresponde a la de ningun ayudante registrado \n");
     }
 }
+void Imprimir_Ayudantes(Registro_Ayudantes *Lista){
+    printf("\n\nLista de ayudantes: \n\n");
+    int contador = 1;
+    Ayudante *puntero = Lista->Inicio;
+
+    // Ciclo para recorrer la lista e imprimir los datos de cada niño
+    while (puntero != NULL){
+
+        // Se imprimen los datos
+        printf("\n%i. Identificacion: %i \nNombre: %s \nPuesto: %s \nFecha en que empezo a trabajar con Santa: %s \n", contador, puntero->ID, puntero->nombre, puntero->puesto, puntero->fecha);
+        int cant = puntero->cant;
+        int i;
+        printf("Funciones que realiza en su puesto: \n");
+
+        // Para imprimir las funciones es necesario un ciclo
+        for ( i = 0; i < cant; i++)
+            printf("%i. %s \n", i+1, puntero->funciones[i]);
+        contador++;
+        puntero = puntero->siguiente;
+    }
+}
+
+Ayudante *CrearAyudante(int ID, char *nombre, char *puesto, char funciones[6][60], char *fecha, int cant);
+void Agregar_Ayudante(Registro_Ayudantes *Lista, int ID, char *nombre, char *puesto, char funciones[6][60], char *fecha, int cant);
+void modificar_datos_ayudante(Registro_Ayudantes *Lista, int ID, int seleccion);
+void Imprimir_Ayudantes(Registro_Ayudantes *Lista);
+
+//Agrega en la main esto:
+
+    Registro_Lugares *Lista_Lugares = (Registro_Lugares *) malloc(sizeof(Registro_Lugares));
+    Lista_Lugares->Inicio = NULL;
+    Lista_Lugares->Final = NULL;
+    char funciones1[10][60], funciones2[10][60], funciones3[10][60], funciones4[10][60], funciones5[10][60], funciones6[10][60], funciones7[10][60], funciones8[10][60], funciones9[10][60], funciones10[10][60];
+    strcpy(funciones1[0], "Nada");strcpy(funciones2[0], "Nada");strcpy(funciones3[0], "Nada");strcpy(funciones4[0], "Nada");strcpy(funciones5[0], "Nada");strcpy(funciones6[0], "Nada");strcpy(funciones7[0], "Nada");strcpy(funciones8[0], "Nada");strcpy(funciones9[0], "Nada");strcpy(funciones10[0], "Nada");
+    Agregar_Ayudante(Lista_Ayudantes, 100, "Duende 1", "Director de duendes", funciones1, "01/01/2021", 1);
+    Agregar_Ayudante(Lista_Ayudantes, 101, "Duende 2", "Asistente de duendes", funciones2, "01/01/2021", 1);
+    Agregar_Ayudante(Lista_Ayudantes, 102, "Duende 3", "Miembro de equipo de duendes", funciones3, "01/01/2021", 1);
+    Agregar_Ayudante(Lista_Ayudantes, 103, "Duende 4", "Miembro de equipo de duendes", funciones4, "01/01/2021", 1);
+    Agregar_Ayudante(Lista_Ayudantes, 105, "Duende 5", "Miembro de equipo de duendes", funciones5, "01/01/2021", 1);
+    Agregar_Ayudante(Lista_Ayudantes, 106, "Duende 6", "Miembro de equipo de duendes", funciones6, "01/01/2021", 1);
+    Agregar_Ayudante(Lista_Ayudantes, 107, "Duende 7", "Miembro de equipo de duendes", funciones7, "01/01/2021", 1);
+    Agregar_Ayudante(Lista_Ayudantes, 108, "Duende 8", "Miembro de equipo de duendes", funciones8, "01/01/2021", 1);
+    Agregar_Ayudante(Lista_Ayudantes, 109, "Duende 9", "Miembro de equipo de duendes", funciones9, "01/01/2021", 1);
+    Agregar_Ayudante(Lista_Ayudantes, 110, "Duende 10", "Miembro de equipo de duendes", funciones10, "01/01/2021", 1);
+    Imprimir_Ayudantes(Lista_Ayudantes);
