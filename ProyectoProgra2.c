@@ -344,3 +344,36 @@ Ayudante *CrearAyudante(int ID, char *nombre, char *puesto, char funciones[6][60
     //Devolvemos el nodo creado
     return NuevoAyudante; 
 }
+void Agregar_Ayudante(Registro_Ayudantes *Lista, int ID, char *nombre, char *puesto, char funciones[6][60], char *fecha, int cant){
+
+    //Se realiza un recorrido a la lista de ayudantes para validar que no se repitan identificaciones
+    Ayudante *puntero = Lista->Inicio;
+    printf("\n\n");
+    while (puntero != NULL)
+    {
+        if (puntero->ID == ID)
+        {
+            printf("Error, Ya existe un ayudante de santa con esa identificacion. Ingrese otra identificacion y vuelva a intentarlo.\n");
+            return;
+        }
+        puntero = puntero->siguiente;
+    }
+
+    //Se crea el nuevo ayudante
+    Ayudante *Nuevo = CrearAyudante(ID, nombre, puesto, funciones, fecha, cant);
+
+    //En caso de que la lista este vacia 
+    if (Lista->Inicio == NULL)
+    {
+        Lista->Inicio = Nuevo;
+        Lista->Final = Nuevo;
+    }
+
+    //En caso de que la lista no este vacia
+    else
+    {
+        Lista->Final->siguiente = Nuevo;
+        Lista->Final = Nuevo;
+    }    
+    printf("Se registro el ayudante exitosamente \n");
+}
