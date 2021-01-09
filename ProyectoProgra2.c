@@ -301,3 +301,95 @@ void modificar_datos_nino(Registro_Ninos *Lista, int ID, int seleccion){
     if (validacion == 0)
         printf("No se pudo modificar o eliminar la informacion pues la identificacion ingresada no corresponde a la de ningun nino registrado \n");
 }
+
+void Imprimir_Ninos(Registro_Ninos *Lista){
+    printf("\n\nLista de Ninos: \n\n");
+    int contador = 1;
+    Ninos *puntero = Lista->Inicio;
+
+    // Ciclo para recorrer la lista e imprimir los datos de cada niño
+    while (puntero != NULL)
+    {
+
+        // Se imprimen los datos
+        printf("\n\n%i. Identificacion: %i \nNombre: %s \nUsuario: %s \nCorreo: %s \nFecha de nacimiento: %s \nEdad: %i \n", contador, puntero->ID, puntero->nombre, puntero->usuario, puntero->correo, puntero->fecha_nacimiento, puntero->edad);
+        int cant = puntero->cant;
+        int i;
+        printf("Necesidades especiales: \n");
+
+        // Para imprimir las necesidades especiales es necesario un ciclo
+        for ( i = 0; i < cant; i++)
+            printf("%i. %s \n", i+1, puntero->necesidades_especiales[i]);
+        contador++;
+        puntero = puntero->siguiente;
+    }
+}
+
+void Imprimir_Ninos(Registro_Ninos *Lista){
+    printf("\n\nLista de Ninos: \n\n");
+    int contador = 1;
+    Ninos *puntero = Lista->Inicio;
+
+    // Ciclo para recorrer la lista e imprimir los datos de cada niño
+    while (puntero != NULL)
+    {
+
+        // Se imprimen los datos
+        printf("\n\n%i. Identificacion: %i \nNombre: %s \nUsuario: %s \nCorreo: %s \nFecha de nacimiento: %s \nEdad: %i \n", contador, puntero->ID, puntero->nombre, puntero->usuario, puntero->correo, puntero->fecha_nacimiento, puntero->edad);
+        int cant = puntero->cant;
+        int i;
+        printf("Necesidades especiales: \n");
+
+        // Para imprimir las necesidades especiales es necesario un ciclo
+        for ( i = 0; i < cant; i++)
+            printf("%i. %s \n", i+1, puntero->necesidades_especiales[i]);
+        contador++;
+        puntero = puntero->siguiente;
+    }
+}
+void Imprimir_Ninos(Registro_Ninos *Lista){
+    printf("\n\nLista de Ninos: \n\n");
+    int contador = 1;
+    Ninos *puntero = Lista->Inicio;
+
+    // Ciclo para recorrer la lista e imprimir los datos de cada niño
+    while (puntero != NULL)
+    {
+
+        // Se imprimen los datos
+        printf("\n\n%i. Identificacion: %i \nNombre: %s \nUsuario: %s \nCorreo: %s \nFecha de nacimiento: %s \nEdad: %i \n", contador, puntero->ID, puntero->nombre, puntero->usuario, puntero->correo, puntero->fecha_nacimiento, puntero->edad);
+        int cant = puntero->cant;
+        int i;
+        printf("Necesidades especiales: \n");
+
+        // Para imprimir las necesidades especiales es necesario un ciclo
+        for ( i = 0; i < cant; i++)
+            printf("%i. %s \n", i+1, puntero->necesidades_especiales[i]);
+        contador++;
+        puntero = puntero->siguiente;
+    }
+}
+
+Ninos *CrearNino(int ID, char *nombre, char *usuario, char *correo, char *fecha_n, int edad, char necesidades[10][60], int cant);
+void Agregar_Nino(Registro_Ninos *Lista, int ID, char *nombre, char *usuario, char *correo, char *fecha_n, int edad, char necesidades[10][60], int cant);
+void modificar_datos_nino(Registro_Ninos *Lista, int ID, int seleccion);
+void Imprimir_Ninos(Registro_Ninos *Lista);
+
+void main(){
+     Registro_Ninos *Lista_Ninos = (Registro_Ninos *) malloc(sizeof(Registro_Ninos));
+     Lista_Ninos->Inicio = NULL;
+     Lista_Ninos->Final = NULL;
+     char necesidades1[10][60], necesidades2[10][60], necesidades3[10][60], necesidades4[10][60], necesidades5[10][60], necesidades6[10][60], necesidades7[10][60], necesidades8[10][60], necesidades9[10][60], necesidades10[10][60];
+    strcpy(necesidades1[0], "Nada");strcpy(necesidades2[0], "Nada");strcpy(necesidades3[0], "Nada");strcpy(necesidades4[0], "Nada");strcpy(necesidades5[0], "Nada");strcpy(necesidades6[0], "Nada");strcpy(necesidades7[0], "Nada");strcpy(necesidades8[0], "Nada");strcpy(necesidades9[0], "Nada");strcpy(necesidades10[0], "Nada");   
+    Agregar_Nino(Lista_Ninos, Lista_Lugares, 1, "Zach Wilson", "Z-01", "ZachKapono@gmail.com", "03/08/1999", 21, necesidades1, 1);
+    Agregar_Nino(Lista_Ninos, Lista_Lugares, 11, "Brandon Aiyuk", "B-11", "Baiyuk@gmail.com", "17/03/1998", 22, necesidades2, 1);
+    Agregar_Nino(Lista_Ninos, Lista_Lugares, 85, "George Kittle", "K-85", "GKittle46@gmail.com", "09/10/1993", 27, necesidades3, 1);
+    Agregar_Nino(Lista_Ninos, Lista_Lugares, 19, "Deebo Samuel", "D-19", "19problemz@gmail.com", "15/01/1996", 24, necesidades4, 1);
+    Agregar_Nino(Lista_Ninos, Lista_Lugares, 31, "Raheem Mostert", "M-31", "Mosball@gmail.com", "09/04/1992", 28, necesidades5, 1);
+    Agregar_Nino(Lista_Ninos, Lista_Lugares, 97, "Nick Bosa", "B-97", "nbsmallerbear@gmail.com", "23/10/1997", 23, necesidades6, 1);
+    Agregar_Nino(Lista_Ninos, Lista_Lugares, 54, "Fred Warner", "F-54", "fredwarner@gmail.com", "19/11/1996", 24, necesidades7, 1);
+    Agregar_Nino(Lista_Ninos, Lista_Lugares, 99, "Javon Kinlaw", "K-99", "Mookdawg@gmail.com", "03/10/1997", 23, necesidades8, 1);
+    Agregar_Nino(Lista_Ninos, Lista_Lugares, 57, "Dre Greenlaw", "D-57", "Dre57@gmail.com", "25/05/1997", 23, necesidades9, 1);
+    Agregar_Nino(Lista_Ninos, Lista_Lugares, 22, "Jason Verrett", "V-22", "JVerrett@gmail.com", "18/06/1991", 29, necesidades10, 1);
+    Imprimir_Ninos(Lista_Ninos);
+}
