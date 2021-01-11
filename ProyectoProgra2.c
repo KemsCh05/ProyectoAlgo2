@@ -51,7 +51,7 @@ Ninos *CrearNino(int ID, char *nombre, char *usuario, char *correo, char *fecha_
 
 void Agregar_Nino(Registro_Ninos *Lista, int ID, char *nombre, char *usuario, char *correo, char *fecha_n, int edad, char necesidades[10][60], int cant){
 
-    //Se realiza un recorrido a la lista de ni�os para validar que no se repitan identificaciones
+    //Se realiza un recorrido a la lista de niños para validar que no se repitan identificaciones
     Ninos *puntero = Lista->Inicio;
     printf("\n\n");
     while (puntero != NULL)
@@ -64,7 +64,7 @@ void Agregar_Nino(Registro_Ninos *Lista, int ID, char *nombre, char *usuario, ch
         puntero = puntero->siguiente;
     }
 
-    //Se crea el nuevo ni�o
+    //Se crea el nuevo niño
     Ninos *Nuevo = CrearNino(ID, nombre, usuario, correo, fecha_n, edad, necesidades, cant);
 
     //En caso de que la lista este vacia 
@@ -87,11 +87,11 @@ void modificar_datos_nino(Registro_Ninos *Lista, int ID, int seleccion){
     Ninos *puntero = Lista->Inicio;
     int validacion = 0;
 
-    // Ciclo para buscar en la lista de ni�os un ni�o que coincida con el ID ingresado que se modificar�/eliminar�
+    // Ciclo para buscar en la lista de niños un niño que coincida con el ID ingresado que se modificará/eliminará
     while (puntero != NULL)
     {
 
-        // En caso de que se encuentre el ni�o que coincide con el ID ingresado
+        // En caso de que se encuentre el niño que coincide con el ID ingresado
         if (puntero->ID == ID){
             validacion++;
 
@@ -100,14 +100,14 @@ void modificar_datos_nino(Registro_Ninos *Lista, int ID, int seleccion){
                 int seleccion2;
                 int a = 0;
 
-                // Este ciclo se repetir� hasta que el usuario ingrese un n�mero de opci�n v�lido
+                // Este ciclo se repetirá hasta que el usuario ingrese un número de opción válido
                 while(a == 0){
 
                     // Se consulta al usuario el dato que desea modificar
                     printf("Ingrese 1 para modificar el ID del nino \nIngrese 2 para modificar el nombre del nino \nIngrese 3 para modificar el usuario del nino \nIngrese 4 para modificar el correo del nino \nIngrese 5 para modificar la fecha de nacimiento del nino \nIngrese 6 para modificar la edad del nino \nIngrese 7 para modificar las necesidades especiales del nino \nIngrese 8 para cancelar \n");
                     scanf("%i", seleccion2);
 
-                    // En caso de que se desee modificar la identificaci�n
+                    // En caso de que se desee modificar la identificación
                     if (seleccion2 == 1)
                     {
                         int ID2;
@@ -198,7 +198,7 @@ void modificar_datos_nino(Registro_Ninos *Lista, int ID, int seleccion){
                         a++;
                     }
 
-                    // En caso de que se ingrese un dato inv�lido
+                    // En caso de que se ingrese un dato inválido
                     else
                         printf("El numero de opcion ingresada no es valida \n");
                 } 
@@ -209,14 +209,14 @@ void modificar_datos_nino(Registro_Ninos *Lista, int ID, int seleccion){
                 int a = 0;
                 int seleccion2;
 
-                // Este ciclo se repetir� hasta que el usuario ingrese un n�mero de opci�n v�lido
+                // Este ciclo se repetirá hasta que el usuario ingrese un número de opción válido
                 while(a == 0){
 
                     // Se consulta al usuario el dato que desea modificar
                     printf("Ingrese 1 para eliminar el ID del nino \nIngrese 2 para eliminar el nombre del nino \nIngrese 3 para eliminar el usuario del nino \nIngrese 4 para eliminar el correo del nino \nIngrese 5 para eliminar la fecha de nacimiento del nino \nIngrese 6 para eliminar la edad del nino \nIngrese 7 para eliminar las necesidades especiales del nino \nIngrese 8 para cancelar \n");
                     scanf("%i", seleccion2);
 
-                    //En caso de que se desee eliminar la identificaci�n
+                    //En caso de que se desee eliminar la identificación
                     if (seleccion2 == 1)
                     {
                         puntero->ID = 0;
@@ -286,7 +286,7 @@ void modificar_datos_nino(Registro_Ninos *Lista, int ID, int seleccion){
                         a++;
                     }
 
-                    // En caso de que se ingrese un dato inv�lido
+                    // En caso de que se ingrese un dato inválido
                     else
                     {
                         printf("El numero de opcion ingresada no es valida \n");
@@ -297,7 +297,7 @@ void modificar_datos_nino(Registro_Ninos *Lista, int ID, int seleccion){
         puntero = puntero->siguiente;
     }
 
-    // En caso de que no se encuentre un ni�o que coincida con el ID ingresado se notifica el error
+    // En caso de que no se encuentre un niño que coincida con el ID ingresado se notifica el error
     if (validacion == 0)
         printf("No se pudo modificar o eliminar la informacion pues la identificacion ingresada no corresponde a la de ningun nino registrado \n");
 }
@@ -381,7 +381,7 @@ void modificar_datos_ayudante(Registro_Ayudantes *Lista, int ID, int seleccion){
     Ayudante *puntero = Lista->Inicio;
     int validacion = 0;
 
-    // Ciclo para buscar en la lista de ayudantes un ayudante que coincida con el ID ingresado que se modificar�/eliminar�
+    // Ciclo para buscar en la lista de ayudantes un ayudante que coincida con el ID ingresado que se modificará/eliminará
     while (puntero != NULL)
     {
 
@@ -394,14 +394,14 @@ void modificar_datos_ayudante(Registro_Ayudantes *Lista, int ID, int seleccion){
                 int a = 0;
                 int seleccion2;
 
-                // Este ciclo se repetir� hasta que el usuario ingrese un n�mero de opci�n v�lido
+                // Este ciclo se repetirá hasta que el usuario ingrese un número de opción válido
                 while(a == 0){
 
                     // Se consulta al usuario el dato que desea modificar
                     printf("Ingrese 1 para modificar el ID del ayudante \nIngrese 2 para modificar el nombre del ayudante \nIngrese 3 para modificar el puesto del ayudante \nIngrese 4 para modificar las funciones del ayudante \nIngrese 5 para modificar la fecha en que empezo a trabajar el ayudante \nIngrese 6 para cancelar \n");
                     scanf("%i", seleccion2);
 
-                    // En caso de que se desee modificar la identificaci�n
+                    // En caso de que se desee modificar la identificación
                     if (seleccion2 == 1)
                     {
                         int ID2;
@@ -452,7 +452,7 @@ void modificar_datos_ayudante(Registro_Ayudantes *Lista, int ID, int seleccion){
                         a++;
                     }
 
-                    // En caso de que se desee modificar la fecha en que inici� a trabajar
+                    // En caso de que se desee modificar la fecha en que inició a trabajar
                     else if (seleccion2 == 5)
                     {
                         char fecha[40];
@@ -470,7 +470,7 @@ void modificar_datos_ayudante(Registro_Ayudantes *Lista, int ID, int seleccion){
                         a++;
                     }
                     
-                    // En caso de que se ingrese un dato inv�lido
+                    // En caso de que se ingrese un dato inválido
                     else
                     {
                         printf("El numero de opcion ingresada no es valida \n");
@@ -483,14 +483,14 @@ void modificar_datos_ayudante(Registro_Ayudantes *Lista, int ID, int seleccion){
                 int a = 0;
                 int seleccion2;
 
-                // Este ciclo se repetir� hasta que el usuario ingrese un n�mero de opci�n v�lido
+                // Este ciclo se repetirá hasta que el usuario ingrese un número de opción válido
                 while(a == 0){
 
                     // Se consulta al usuario el dato que desea eliminar
                     printf("Ingrese 1 para eliminar el ID del ayudante \nIngrese 2 para eliminar el nombre del ayudante \nIngrese 3 para eliminar el puesto del ayudante \nIngrese 4 para eliminar las funciones del ayudante \nIngrese 5 para eliminar la fecha en que empezo a trabajar el ayudante \nIngrese 6 para cancelar \n");
                     scanf("%i", seleccion2);
 
-                    // En caso de que se desee eliminar la identificaci�n
+                    // En caso de que se desee eliminar la identificación
                     if (seleccion2 == 1)
                     {
                         puntero->ID = 0;
@@ -527,7 +527,7 @@ void modificar_datos_ayudante(Registro_Ayudantes *Lista, int ID, int seleccion){
                         a++;
                     }
 
-                    // En caso de que se desee eliminar la fecha en que inici� a trabajar
+                    // En caso de que se desee eliminar la fecha en que inició a trabajar
                     else if (seleccion2 == 5)
                     {
                         strcpy(puntero->fecha, "");
@@ -542,7 +542,7 @@ void modificar_datos_ayudante(Registro_Ayudantes *Lista, int ID, int seleccion){
                         a++;
                     }
                     
-                    // En caso de que la opci�n ingresada no sea v�lida
+                    // En caso de que la opción ingresada no sea válida
                     else
                         printf("El numero de opcion ingresada no es valida \n");
                 } 
@@ -562,7 +562,7 @@ void Imprimir_Ayudantes(Registro_Ayudantes *Lista){
     int contador = 1;
     Ayudante *puntero = Lista->Inicio;
 
-    // Ciclo para recorrer la lista e imprimir los datos de cada ni�o
+    // Ciclo para recorrer la lista e imprimir los datos de cada niño
     while (puntero != NULL){
 
         // Se imprimen los datos
@@ -584,8 +584,360 @@ void Agregar_Ayudante(Registro_Ayudantes *Lista, int ID, char *nombre, char *pue
 void modificar_datos_ayudante(Registro_Ayudantes *Lista, int ID, int seleccion);
 void Imprimir_Ayudantes(Registro_Ayudantes *Lista);
 
-//Agrega en la main esto:
+typedef struct juguetes Juguete;
 
+struct juguetes
+{
+    Juguete *izq;
+    Juguete *der;
+    Juguete *anterior;
+    char codigo[10];
+    char nombre[30];
+    char descripcion[60];
+    char categoria[15];
+    char rango[15];
+    int costo;
+};
+
+Juguete *raiz = NULL;
+
+Juguete *Crear_Juguete(char *codigo, char *nombre, char *descripcion, char *categoria, char *rango, int costo){
+
+    // Se crea un nuevo nodo apartando el espacio en memoria
+    Juguete *nuevo;
+    nuevo = malloc(sizeof(Juguete));
+
+    // Agregamos los datos
+    strcpy(nuevo->codigo, codigo);
+    strcpy(nuevo->nombre, nombre);
+    strcpy(nuevo->descripcion, descripcion);
+    strcpy(nuevo->categoria, categoria);
+    strcpy(nuevo->rango, rango);
+    nuevo->costo = costo;
+    nuevo->izq = NULL;
+    nuevo->der = NULL;
+    nuevo->anterior = NULL;
+
+    // Devolvemos el nodo creado
+    return nuevo;
+}
+
+void Agregar_Juguete(char *codigo, char *nombre, char *descripcion, char *categoria, char *rango, int costo){
+
+    // Se crea el nuevo juguete
+    Juguete *nuevo = Crear_Juguete(codigo, nombre, descripcion, categoria, rango, costo);
+
+    // En caso de que no haya ningún juguete en el árbol, el nuevo juguete se convierte en la raíz
+    if (raiz == NULL)
+        raiz = nuevo;
+
+    // En caso de que ya se haya agregado al menos un juguete
+    else
+    {
+        Juguete *anterior, *recorrido;
+        anterior = NULL;
+        recorrido = raiz;
+
+        // Mientras queden elementos en el árbol se repite el ciclo
+        while (recorrido != NULL)
+        {
+            anterior = recorrido;
+
+            // En caso de que el costo del nuevo juguete sea menor al de el elemento en cuestión se continúa por la izquierda
+            if (nuevo->costo < recorrido->costo)
+                recorrido = recorrido->izq;
+
+            // En caso de que el costo del nuevo juguete sea mayor al de el elemento en cuestión se continúa por la derecha
+            else
+                recorrido = recorrido->der;
+        }
+
+        // En caso de que el costo del nuevo juguete sea menor al de el último elemento recorrido se inserta a la izquierda de este
+        if (nuevo->costo < anterior->costo){
+            anterior->izq = nuevo;
+            nuevo->anterior = anterior;
+        }
+
+        // En caso de que el costo del nuevo juguete sea mayor al de el último elemento recorrido se inserta a la derecha de este
+        else{
+            anterior->der = nuevo;
+            nuevo->anterior = anterior;
+        }
+    }
+}
+
+void Modificar_Juguetes(Juguete *recorrido, char *nombre, int costo, int seleccion){
+
+    // Ciclo para buscar en la lista de juguetes un juguete que coincida con el nombre ingresado que se modificará/eliminará
+    while (recorrido != NULL)
+    {
+
+        // En caso de que se encuentre el juguete a modificar/eliminar
+        if (strcmp(recorrido->nombre, nombre)== 0 )
+        {
+
+            // En caso de que se desee modificar
+            if (seleccion == 1)
+            {
+                int a = 0;
+
+                // Este ciclo se repetirá hasta que el usuario ingrese un número de opción válido
+                while (a == 0)
+                {
+                    int seleccion2 = 0;
+
+                    // Se consulta al usuario el dato que desea modificar
+                    printf("Ingrese 1 para modificar el codigo del juguete \nIngrese 2 para modificar el nombre del juguete \nIngrese 3 para modificar la descripcion del juguete \nIngrese 4 para modificar la categoria del juguete \nIngrese 5 para modificar el rango de edad del juguete \nIngrese 6 para modificar el costo del juguete \nIngrese 7 para cancelar \n");
+                    scanf("%i", &seleccion2);
+
+                    // En caso de que se desee modificar el código
+                    if (seleccion2 == 1)
+                    {
+                        char codigo[10];
+                        printf("Ingrese el nuevo codigo del juguete: \n");
+                        scanf("%s", &codigo);
+                        strcpy(recorrido->codigo, codigo);
+                        printf("Se ha modificado exitosamente el codigo del juguete \n");
+                        return;
+                    }
+
+                    // En caso de que se desee modificar el nombre
+                    else if (seleccion2 == 2)
+                    {
+                        char nombre[30];
+                        printf("Ingrese el nuevo nombre del juguete: \n");
+                        scanf("%s", &nombre);
+                        strcpy(recorrido->nombre, nombre);
+                        printf("Se ha modificado exitosamente el nombre del juguete \n");
+                        return;
+                    }
+
+                    // En caso de que se desee modificar la descripción
+                    else if (seleccion2 == 3)
+                    {
+                        char descripcion[60];
+                        printf("Ingrese la nueva descripcion del juguete: \n");
+                        scanf("%s", &descripcion);
+                        strcpy(recorrido->descripcion, descripcion);
+                        printf("Se ha modificado exitosamente la descripcion del juguete \n");
+                        return;
+                    }
+
+                    // En caso de que se desee modificar la categoría
+                    else if (seleccion2 == 4)
+                    {
+                        char categoria[15];
+                        printf("Ingrese la nueva categoria del juguete: \n");
+                        scanf("%s", &categoria);
+                        strcpy(recorrido->categoria, categoria);
+                        printf("Se ha modificado exitosamente la categoria del juguete \n");
+                        return;
+                    }
+
+                    // En caso de que se desee modificar el rango de edad
+                    else if (seleccion2 == 5)
+                    {
+                        char rango[15];
+                        printf("Ingrese el nuevo rango de edad del juguete: \n");
+                        scanf("%s", &rango);
+                        strcpy(recorrido->rango, rango);
+                        printf("Se ha modificado exitosamente el rango de edad del juguete \n");
+                        return;
+                    }
+
+                    // En caso de que se desee modificar el costo
+                    else if (seleccion2 == 6)
+                    {
+                        int costo;
+                        printf("Ingrese el nuevo costo del juguete: \n");
+                        scanf("%s", &costo);
+                        recorrido->costo = costo;
+                        printf("Se ha modificado exitosamente el costo del juguete \n");
+                        return;
+                    }
+
+                    // En caso de que se desee cancelar
+                    else if (seleccion2 == 7)
+                    {
+                        printf("No se ha modificado ningun dato \n");
+                        return;
+                    }
+                    
+                    // En caso de que se ingrese un dato inválido
+                    else
+                        printf("El numero ingresado no corresponde a ninguna de las opciones disponibles. Vuelva a intentarlo \n");
+                }   
+            }
+
+            // En caso de que se desee eliminar un dato
+            if (seleccion == 2)
+            {
+
+                // En caso de que el dato a eliminar sea la raíz
+                if (recorrido == raiz)
+                {
+
+                    // En caso de que la raíz no tenga hijos
+                    if (recorrido->izq == NULL && recorrido->der == NULL)
+                    {
+                        raiz = NULL;
+                        free(recorrido);
+                        return;
+                    }
+
+                    // En caso de que la raíz tenga solo hijo izquierdo
+                    else if (recorrido->izq != NULL && recorrido->der == NULL)
+                    {
+                        raiz = recorrido->izq;
+                        recorrido->izq->anterior = NULL;
+                        recorrido->izq = NULL;
+                        free(recorrido);
+                        return;
+                    }
+
+                    // En caso de que la raíz tenga solo hijo derecho
+                    else if (recorrido->izq == NULL && recorrido->der != NULL)
+                    {
+                        raiz = recorrido->der;
+                        recorrido->der->anterior = NULL;
+                        recorrido->der = NULL;
+                        free(recorrido);
+                        return;
+                    }
+
+                    // En caso de que tenga dos hijos
+                    else
+                    {
+                        recorrido->izq->der->anterior = NULL;
+                        recorrido->izq->der->izq = recorrido->izq;
+                        recorrido->izq->der->der = recorrido->der;
+                        raiz = recorrido->izq->der;
+                        recorrido->izq->der = NULL;
+                        free(recorrido);
+                        return;
+                    }
+                }
+                
+                // En caso de que no se vaya a eliminar la raíz sino otro elemento
+
+                // En caso de que el elemento no tenga hijos y esté a la izquierda de su elemento anterior
+                if (recorrido->izq == NULL && recorrido->der == NULL && recorrido->anterior->izq == recorrido)
+                {
+                    recorrido->anterior->izq = NULL;
+                    free(recorrido);
+                    return;
+                }
+
+                // En caso de que el elemento no tenga hijos y esté a la derecha de su elemento anterior
+                else if (recorrido->izq == NULL && recorrido->der == NULL && recorrido->anterior->der == recorrido)
+                {
+                    recorrido->anterior->der = NULL;
+                    free(recorrido);
+                    return;
+                }
+
+                // En caso de que el elemento solo tenga hijo izquierdo y esté a la izquierda de su elemento anterior
+                else if (recorrido->izq != NULL && recorrido->der == NULL && recorrido->anterior->izq == recorrido)
+                {
+                    recorrido->izq->anterior = recorrido->anterior;
+                    recorrido->anterior->izq = recorrido->izq;
+                    recorrido->izq = NULL;
+                    free(recorrido);
+                    return;
+                }
+
+                // En caso de que el elemento solo tenga hijo izquierdo y esté a la derecha de su elemento anterior
+                else if (recorrido->izq != NULL && recorrido->der == NULL && recorrido->anterior->der == recorrido)
+                {
+                    recorrido->izq->anterior = recorrido->anterior;
+                    recorrido->anterior->der = recorrido->izq;
+                    recorrido->izq = NULL;
+                    free(recorrido);
+                    return;
+                }
+
+                // En caso de que el elemento solo tenga hijo derecho y esté a la derecha de su elemento anterior
+                else if (recorrido->der != NULL && recorrido->izq == NULL && recorrido->anterior->der == recorrido)
+                {
+                    recorrido->der->anterior = recorrido->anterior;
+                    recorrido->anterior->der = recorrido->der;
+                    recorrido->der = NULL;
+                    free(recorrido);
+                    return;
+                }
+
+                // En caso de que el elemento solo tenga hijo derecho y esté a la izquierda de su elemento anterior
+                else if (recorrido->der != NULL && recorrido->izq == NULL && recorrido->anterior->izq == recorrido)
+                {
+                    recorrido->der->anterior = recorrido->anterior;
+                    recorrido->anterior->izq = recorrido->der;
+                    recorrido->der = NULL;
+                    free(recorrido);
+                    return;
+                }
+
+                // En caso de que el elemento solo tenga dos hijos y esté a la izquierda de su elemento anterior
+                else if (recorrido->der != NULL && recorrido->izq != NULL && recorrido->anterior->izq == recorrido)
+                {
+                    recorrido->izq->der->anterior = recorrido->anterior;
+                    recorrido->anterior->izq = recorrido->izq->der;
+                    recorrido->izq->der = NULL;
+                    free(recorrido);
+                    return;
+                }
+
+                // En caso de que el elemento solo tenga dos hijos y esté a la derecha de su elemento anterior
+                else if (recorrido->der != NULL && recorrido->izq != NULL && recorrido->anterior->der == recorrido)
+                {
+                    recorrido->izq->der->anterior = recorrido->anterior;
+                    recorrido->anterior->der = recorrido->izq->der;
+                    recorrido->izq->der = NULL;
+                    free(recorrido);
+                    return;
+                }
+            }
+        }
+
+        // En caso de que no se haya concluido la búsqueda y que el costo ingresado sea mayor al costo del elemento en cuestión
+        else if (costo > recorrido->costo) 
+            recorrido = recorrido->der; 
+
+        // En caso de que no se haya concluido la búsqueda y que el costo ingresado sea menor al costo del elemento en cuestión
+        else if (costo < recorrido->costo) 
+            recorrido = recorrido->izq;
+
+        // En caso de que no se haya concluido la búsqueda y que el costo ingresado sea igual al costo del elemento en cuestión
+        else
+            recorrido = recorrido->der; 
+    }
+}
+
+void imprimirJuguete(Juguete *recorrido)
+{
+
+    // Se repite la recursividad mientras hayan juguetes para imprimir
+    if (recorrido != NULL)
+    {
+
+        // Se imprimen los datos
+        printf("Codigo: %s \n", recorrido->codigo);
+        printf("Nombre: %s \n", recorrido->nombre);
+        printf("Descripcion: %s \n", recorrido->descripcion);
+        printf("Categoria: %s \n", recorrido->categoria);
+        printf("Rango de edad: %s \n", recorrido->rango);
+        printf("Costo: %i \n", recorrido->costo);
+        imprimirJuguete(recorrido->izq);
+        imprimirJuguete(recorrido->der);
+    }
+}
+
+Juguete *Crear_Juguete(char *codigo, char *nombre, char *descripcion, char *categoria, char *rango, int costo);
+void Agregar_Juguete(char *codigo, char *nombre, char *descripcion, char *categoria, char *rango, int costo);
+void Modificar_Juguetes(Juguete *recorrido, char *nombre, int costo, int seleccion);
+void imprimirJuguete(Juguete *recorrido);
+
+//Agrega en la main esto:
+void main(){
     Registro_Lugares *Lista_Lugares = (Registro_Lugares *) malloc(sizeof(Registro_Lugares));
     Lista_Lugares->Inicio = NULL;
     Lista_Lugares->Final = NULL;
@@ -602,3 +954,25 @@ void Imprimir_Ayudantes(Registro_Ayudantes *Lista);
     Agregar_Ayudante(Lista_Ayudantes, 109, "Duende 9", "Miembro de equipo de duendes", funciones9, "01/01/2021", 1);
     Agregar_Ayudante(Lista_Ayudantes, 110, "Duende 10", "Miembro de equipo de duendes", funciones10, "01/01/2021", 1);
     Imprimir_Ayudantes(Lista_Ayudantes);
+    Agregar_Juguete("J01", "Buzz Lightyear", "Nada", "Juguete", "0-12 annos", 2300);
+    Agregar_Juguete("J02", "Buzz Lightyear2", "Nada", "Juguete", "0-12 annos", 2500);
+    Agregar_Juguete("J03", "Buzz Lightyear3", "Nada", "Juguete", "0-12 annos", 2800);
+    Agregar_Juguete("J04", "Buzz Lightyear4", "Nada", "Juguete", "0-12 annos", 2100);
+    Agregar_Juguete("J05", "Buzz Lightyear5", "Nada", "Juguete", "0-12 annos", 2200);
+    Agregar_Juguete("J06", "Buzz Lightyear6", "Nada", "Juguete", "0-12 annos", 2900);
+    Agregar_Juguete("J07", "Buzz Lightyear7", "Nada", "Juguete", "0-12 annos", 3000);
+    Agregar_Juguete("J08", "Buzz Lightyear8", "Nada", "Juguete", "0-12 annos", 2300);
+    Agregar_Juguete("J09", "Buzz Lightyear9", "Nada", "Juguete", "0-12 annos", 2500);
+    Agregar_Juguete("J10", "Buzz Lightyear10", "Nada", "Juguete", "0-12 annos", 2800);
+    Agregar_Juguete("J11", "Buzz Lightyear11", "Nada", "Juguete", "0-12 annos", 2100);
+    Agregar_Juguete("J12", "Buzz Lightyear12", "Nada", "Juguete", "0-12 annos", 2200);
+    Agregar_Juguete("J13", "Buzz Lightyear13", "Nada", "Juguete", "0-12 annos", 2900);
+    Agregar_Juguete("J14", "Buzz Lightyear14", "Nada", "Juguete", "0-12 annos", 3000);
+    Agregar_Juguete("J15", "Buzz Lightyear15", "Nada", "Juguete", "0-12 annos", 2500);
+    Agregar_Juguete("J16", "Buzz Lightyear16", "Nada", "Juguete", "0-12 annos", 2800);
+    Agregar_Juguete("J17", "Buzz Lightyear17", "Nada", "Juguete", "0-12 annos", 2100);
+    Agregar_Juguete("J18", "Buzz Lightyear18", "Nada", "Juguete", "0-12 annos", 2200);
+    Agregar_Juguete("J19", "Buzz Lightyear19", "Nada", "Juguete", "0-12 annos", 2900);
+    Agregar_Juguete("J20", "Buzz Lightyear20", "Nada", "Juguete", "0-12 annos", 3000);
+    imprimirJuguete(raiz);
+}
