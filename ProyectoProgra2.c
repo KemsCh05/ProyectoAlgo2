@@ -325,51 +325,6 @@ void Imprimir_Ninos(Registro_Ninos *Lista){
     }
 }
 
-void Imprimir_Ninos(Registro_Ninos *Lista){
-    printf("\n\nLista de Ninos: \n\n");
-    int contador = 1;
-    Ninos *puntero = Lista->Inicio;
-
-    // Ciclo para recorrer la lista e imprimir los datos de cada niño
-    while (puntero != NULL)
-    {
-
-        // Se imprimen los datos
-        printf("\n\n%i. Identificacion: %i \nNombre: %s \nUsuario: %s \nCorreo: %s \nFecha de nacimiento: %s \nEdad: %i \n", contador, puntero->ID, puntero->nombre, puntero->usuario, puntero->correo, puntero->fecha_nacimiento, puntero->edad);
-        int cant = puntero->cant;
-        int i;
-        printf("Necesidades especiales: \n");
-
-        // Para imprimir las necesidades especiales es necesario un ciclo
-        for ( i = 0; i < cant; i++)
-            printf("%i. %s \n", i+1, puntero->necesidades_especiales[i]);
-        contador++;
-        puntero = puntero->siguiente;
-    }
-}
-void Imprimir_Ninos(Registro_Ninos *Lista){
-    printf("\n\nLista de Ninos: \n\n");
-    int contador = 1;
-    Ninos *puntero = Lista->Inicio;
-
-    // Ciclo para recorrer la lista e imprimir los datos de cada niño
-    while (puntero != NULL)
-    {
-
-        // Se imprimen los datos
-        printf("\n\n%i. Identificacion: %i \nNombre: %s \nUsuario: %s \nCorreo: %s \nFecha de nacimiento: %s \nEdad: %i \n", contador, puntero->ID, puntero->nombre, puntero->usuario, puntero->correo, puntero->fecha_nacimiento, puntero->edad);
-        int cant = puntero->cant;
-        int i;
-        printf("Necesidades especiales: \n");
-
-        // Para imprimir las necesidades especiales es necesario un ciclo
-        for ( i = 0; i < cant; i++)
-            printf("%i. %s \n", i+1, puntero->necesidades_especiales[i]);
-        contador++;
-        puntero = puntero->siguiente;
-    }
-}
-
 Ninos *CrearNino(int ID, char *nombre, char *usuario, char *correo, char *fecha_n, int edad, char necesidades[10][60], int cant);
 void Agregar_Nino(Registro_Ninos *Lista, int ID, char *nombre, char *usuario, char *correo, char *fecha_n, int edad, char necesidades[10][60], int cant);
 void modificar_datos_nino(Registro_Ninos *Lista, int ID, int seleccion);
