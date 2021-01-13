@@ -375,6 +375,74 @@ void Agregar_Nino(Registro_Ninos *Lista, int ID, char *nombre, char *usuario, ch
 void modificar_datos_nino(Registro_Ninos *Lista, int ID, int seleccion);
 void Imprimir_Ninos(Registro_Ninos *Lista);
 
+typedef struct lugar Lugar;
+typedef struct Registros3 Registro_Lugares;
+
+struct lugar
+{
+    Lugar *siguiente;
+    Lugar *anterior;
+    char codigo[10];
+    char nombre[30];
+    int codigo_postal;
+};
+
+struct Registros3
+{
+    Lugar *Inicio;
+    Lugar *Final;
+};
+
+Lugar *Crear_Lugar(char *codigo, char *nombre, int codigo_postal){
+    
+    //Se crea un nuevo nodo apartando el espacio en memoria
+    Lugar *NuevoLugar = (Lugar *) malloc(sizeof(Lugar));
+    NuevoLugar->siguiente = NULL;
+    NuevoLugar->anterior = NULL;
+
+    //Agregamos los datos
+    strcpy(NuevoLugar->codigo, codigo); 
+    strcpy(NuevoLugar->nombre, nombre); 
+    NuevoLugar->codigo_postal = codigo_postal;
+
+    //Devolvemos el nodo creado
+    return NuevoLugar; 
+}
+
+void Agregar_Lugar(Registro_Lugares *Lista, char *codigo, char *nombre, int codigo_postal){
+    //Se realiza un recorrido a la lista de lugares para validar que no se repitan códigos
+    Lugar *puntero = Lista->Inicio;
+    printf("\n\n");
+    while (puntero != NULL)
+    {
+        if (puntero->codigo == codigo)
+        {
+            printf("Error, Ya existe un lugar con ese codigo. Ingrese otro codigo y vuelva a intentarlo.\n");
+            return;
+        }
+        puntero = puntero->siguiente;
+    }
+
+    //Se crea el nuevo lugar
+    Lugar *Nuevo = Crear_Lugar(codigo, nombre, codigo_postal);
+
+    //En caso de que la lista este vacia 
+    if (Lista->Inicio == NULL)
+    {
+        Lista->Inicio = Nuevo;
+        Lista->Final = Nuevo;
+    }
+
+    //En caso de que la lista no este vacia
+    else
+    {
+        Lista->Final->siguiente = Nuevo;
+        Nuevo->anterior = Lista->Final;
+        Lista->Final = Nuevo;
+    }    
+    printf("Se registro el lugar exitosamente \n");
+}
+
 void main(){
      Registro_Ninos *Lista_Ninos = (Registro_Ninos *) malloc(sizeof(Registro_Ninos));
      Lista_Ninos->Inicio = NULL;
