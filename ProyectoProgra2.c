@@ -23,7 +23,7 @@ struct Registros
     Ninos *Final;
 };
 
-Ninos *CrearNino(int ID, char *nombre, char *usuario, char *correo, char *fecha_n, int edad, char necesidades[10][60], int cant){
+Ninos *CrearNino(int ID, char *nombre, char *usuario, char *lugar_residencia ,char *correo, char *fecha_n, int edad, char necesidades[10][60], int cant){
 
     //Se crea un nuevo nodo apartando el espacio en memoria
     Ninos *NuevoNino = (Ninos *) malloc(sizeof(Ninos));
@@ -49,7 +49,7 @@ Ninos *CrearNino(int ID, char *nombre, char *usuario, char *correo, char *fecha_
     return NuevoNino; 
 }
 
-void Agregar_Nino(Registro_Ninos *Lista, int ID, char *nombre, char *usuario, char *correo, char *fecha_n, int edad, char necesidades[10][60], int cant){
+void Agregar_Nino(Registro_Ninos *Lista, Registro_Lugares *Lista2, int ID, char *nombre, char *usuario, char *lugar_residencia ,char *correo, char *fecha_n, int edad, char necesidades[10][60], int cant){
 
     //Se realiza un recorrido a la lista de niños para validar que no se repitan identificaciones
     Ninos *puntero = Lista->Inicio;
@@ -63,9 +63,21 @@ void Agregar_Nino(Registro_Ninos *Lista, int ID, char *nombre, char *usuario, ch
         }
         puntero = puntero->siguiente;
     }
+    //Recorrido a los lugares registrados para validar que el lugar de residencia del niño se encuentre registrado
+    Lugar *puntero2 = Lista2->Inicio;
+    int validacion = 0;
+    while (puntero2 != NULL)
+    {
+        if (strcmp(puntero2->nombre, lugar_residencia) == 0)
+        {
+            validacion++;
+        }
+        puntero2 = puntero2->siguiente;
+    }
+
 
     //Se crea el nuevo niño
-    Ninos *Nuevo = CrearNino(ID, nombre, usuario, correo, fecha_n, edad, necesidades, cant);
+    Ninos *Nuevo = CrearNino(ID, nombre, usuario, lugar_residencia, correo, fecha_n, edad, necesidades, cant);
 
     //En caso de que la lista este vacia 
     if (Lista->Inicio == NULL)
