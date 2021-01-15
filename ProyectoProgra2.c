@@ -330,6 +330,162 @@ void Agregar_Nino(Registro_Ninos *Lista, int ID, char *nombre, char *usuario, ch
 void modificar_datos_nino(Registro_Ninos *Lista, int ID, int seleccion);
 void Imprimir_Ninos(Registro_Ninos *Lista);
 
+typedef struct lugar Lugar;
+typedef struct Registros3 Registro_Lugares;
+
+struct lugar
+{
+    Lugar *siguiente;
+    Lugar *anterior;
+    char codigo[10];
+    char nombre[30];
+    int codigo_postal;
+};
+
+struct Registros3
+{
+    Lugar *Inicio;
+    Lugar *Final;
+};
+
+Lugar *Crear_Lugar(char *codigo, char *nombre, int codigo_postal){
+    
+    //Se crea un nuevo nodo apartando el espacio en memoria
+    Lugar *NuevoLugar = (Lugar *) malloc(sizeof(Lugar));
+    NuevoLugar->siguiente = NULL;
+    NuevoLugar->anterior = NULL;
+
+    //Agregamos los datos
+    strcpy(NuevoLugar->codigo, codigo); 
+    strcpy(NuevoLugar->nombre, nombre); 
+    NuevoLugar->codigo_postal = codigo_postal;
+
+    //Devolvemos el nodo creado
+    return NuevoLugar; 
+}
+
+void Agregar_Lugar(Registro_Lugares *Lista, char *codigo, char *nombre, int codigo_postal){
+    //Se realiza un recorrido a la lista de lugares para validar que no se repitan códigos
+    Lugar *puntero = Lista->Inicio;
+    printf("\n\n");
+    while (puntero != NULL)
+    {
+        if (puntero->codigo == codigo)
+        {
+            printf("Error, Ya existe un lugar con ese codigo. Ingrese otro codigo y vuelva a intentarlo.\n");
+            return;
+        }
+        puntero = puntero->siguiente;
+    }
+
+    //Se crea el nuevo lugar
+    Lugar *Nuevo = Crear_Lugar(codigo, nombre, codigo_postal);
+
+    //En caso de que la lista este vacia 
+    if (Lista->Inicio == NULL)
+    {
+        Lista->Inicio = Nuevo;
+        Lista->Final = Nuevo;
+    }
+
+    //En caso de que la lista no este vacia
+    else
+    {
+        Lista->Final->siguiente = Nuevo;
+        Nuevo->anterior = Lista->Final;
+        Lista->Final = Nuevo;
+    }    
+    printf("Se registro el lugar exitosamente \n");
+}
+
+void modificar_datos_lugar(Registro_Lugares *Lista, char *nombre, int seleccion){
+    Lugar *puntero = Lista->Inicio;
+    int validacion = 0;
+
+    // Ciclo para buscar en la lista de lugares un lugar que coincida con el nombre ingresado que se modificará/eliminará
+    while (puntero != NULL)
+    {
+
+        // En caso de que se encuentre el lugar que coincide con el nombre ingresado
+        if (strcmp(puntero->nombre, nombre)== 0){
+            validacion++;
+
+            // En caso de que se vaya a modificar un dato
+            if (seleccion == 1){
+                int a = 0;
+                int seleccion2;
+
+                // Este ciclo se repetirá hasta que el usuario ingrese un número de opción válido
+                while(a == 0){
+
+                    // Se consulta al usuario el dato que desea modificar
+                    printf("Ingrese 1 para modificar el codigo del lugar \nIngrese 2 para modificar el nombre del lugar \nIngrese 3 para modificar el codigo postal del lugar \nIngrese 4 para cancelar \n");
+                    scanf("%i", seleccion2);
+
+                    // En caso de que se desee modificar el codigo
+                    if (seleccion2 == 1)
+                    {
+                        char codigo[10];
+                        printf("Ingrese el nuevo codigo del lugar: \n");
+                        scanf("%s", &codigo);
+                        strcpy(puntero->codigo, codigo);
+                        printf("Se modifico el codigo del lugar exitosamente \n");
+                        a++;
+                    }
+
+                    // En caso de que se desee modificar el nombre
+                    else if (seleccion2 == 2)
+                    {
+                        char nombre[30];
+                        printf("Ingrese el nuevo nombre del lugar: \n");
+                        scanf("%s", &nombre);
+                        strcpy(puntero->nombre, nombre);
+                        printf("Se modifico el nombre del lugar exitosamente \n");
+                        a++;
+                    }
+
+                    // En caso de que se desee modificar el codigo postal
+                    else if (seleccion2 == 3)
+                    {
+                        int codigo_postal;
+                        printf("Ingrese el nuevo codigo postal del lugar: \n");
+                        scanf("%i", &codigo_postal);
+                        puntero->codigo_postal = codigo_postal;
+                        printf("Se modifico el codigo postal del lugar exitosamente \n");
+                        a++;
+                    }
+
+                    //En caso de que se desee cancelar
+                    else if (seleccion2 == 4)
+                    {
+                        printf("No se modifico ningun dato \n");
+                        return;
+                    }
+                    
+                    else
+                    {
+                        printf("El numero de opcion ingresada no es valida \n");
+                    } 
+                } 
+            }
+
+            // En caso de que se desee eliminar un lugar
+            if (seleccion == 2){
+                puntero->anterior->siguiente = puntero->siguiente;
+                puntero->siguiente->anterior = puntero->anterior;
+                free(puntero);
+            }
+        }
+        puntero = puntero->siguiente;
+    }
+
+    // En caso de que no se encuentre un lugar que coincida con el nombre ingresado se notifica el error
+    if (validacion == 0)
+    {
+        printf("No se pudo modificar o eliminar la informacion pues el nombre ingresado no corresponde al de ningun lugar registrado \n");
+    }
+}
+
 void main(){
      Registro_Ninos *Lista_Ninos = (Registro_Ninos *) malloc(sizeof(Registro_Ninos));
      Lista_Ninos->Inicio = NULL;
