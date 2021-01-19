@@ -4,6 +4,10 @@
 
 typedef struct ninos Ninos;
 typedef struct Registros Registro_Ninos;
+typedef struct juguete_carta Juguete_Carta;
+typedef struct Lista_Deseos Deseos;
+typedef struct carta Carta_Santa;
+typedef struct Registros5 Registro_Carta;
 
 struct ninos{
     Ninos *siguiente;
@@ -22,6 +26,47 @@ struct Registros
     Ninos *Inicio;
     Ninos *Final;
 };
+
+struct juguete_carta
+{
+    Juguete_Carta *siguiente;
+    Juguete_Carta *anterior;
+    char estado[25];
+    char juguete[30];
+    int ayudante;
+    int anno;
+    int nino;
+};
+
+struct Lista_Deseos
+{
+    Deseos *siguiente;
+    Deseos *anterior;
+    char juguete[30];
+};
+
+struct carta
+{
+    Juguete_Carta *Inicio_Juguetes;
+    Juguete_Carta *Final_Juguetes;
+    Deseos *Inicio_Deseos;
+    Deseos *Final_Deseos;
+    Carta_Santa *siguiente;
+    Carta_Santa *anterior;
+    int ID_Nino;
+    char nombre_nino[60];
+    char estado[15];
+    int contador_juguetes;
+    int contador_juguetes_a_entregar;
+    int anno;
+};
+
+struct Registros5
+{
+    Carta_Santa *Inicio;
+    Carta_Santa *Final;
+};
+
 
 Ninos *CrearNino(int ID, char *nombre, char *usuario, char *lugar_residencia ,char *correo, char *fecha_n, int edad, char necesidades[10][60], int cant){
 
