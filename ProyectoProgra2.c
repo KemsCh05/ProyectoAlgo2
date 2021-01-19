@@ -486,6 +486,89 @@ void modificar_datos_lugar(Registro_Lugares *Lista, char *nombre, int seleccion)
     }
 }
 
+typedef struct comportamiento Comportamiento;
+typedef struct Registros4 Registro_Comportamiento;
+
+struct comportamiento
+{
+    Comportamiento *siguiente;
+    char nombre_padre[30];
+    int ID_Nino;
+    char fecha[11];
+    char descripcion[130];
+    char indicacion[6];
+};
+
+struct Registros4
+{
+    Comportamiento *Inicio;
+    Comportamiento *Final;
+};
+
+Comportamiento *Crear_Comportamiento(char *nombre_padre, int ID_Nino, char *fecha, char *descripcion, char *indicacion){
+    
+    //Se crea un nuevo nodo apartando el espacio en memoria
+    Comportamiento *NuevoComportamiento = (Comportamiento *) malloc(sizeof(Comportamiento));
+    NuevoComportamiento->siguiente = NULL;
+
+    //Agregamos los datos
+    strcpy(NuevoComportamiento->nombre_padre, nombre_padre); 
+    NuevoComportamiento->ID_Nino = ID_Nino;
+    strcpy(NuevoComportamiento->fecha, fecha);
+    strcpy(NuevoComportamiento->descripcion, descripcion);
+    strcpy(NuevoComportamiento->indicacion, indicacion);
+
+    //Devolvemos el nodo creado
+    return NuevoComportamiento; 
+}
+
+void Agregar_Comportamiento(Registro_Comportamiento *Lista, Registro_Ninos *Lista2, char *nombre_padre, int ID_Nino, char *fecha, char *descripcion, char *indicacion){
+    
+    //Se realiza un recorrido a la lista de niños para validar que esté registrado
+    Ninos *puntero = Lista2->Inicio;
+    int validacion = 0;
+    printf("\n\n");
+    while (puntero != NULL)
+    {
+        if (puntero->ID == ID_Nino)
+        {
+            validacion++;
+            if (strcmp(indicacion, "Malo") == 0 || strcmp(indicacion, "malo") == 0)
+            {
+                puntero->comportamientos_malos += 1;
+            }
+            
+        }
+        puntero = puntero->siguiente;
+    }
+
+    if (validacion == 0)
+    {
+        printf("No existe ningun nino registrado con esa identificacion. Ingrese otra identificacion y vuelva a intentarlo. \n");
+        return;
+    }
+
+    //Se crea el nuevo ayudante
+    Comportamiento *Nuevo = Crear_Comportamiento(nombre_padre, ID_Nino, fecha, descripcion, indicacion);
+
+    //En caso de que la lista este vacia 
+    if (Lista->Inicio == NULL)
+    {
+        Lista->Inicio = Nuevo;
+        Lista->Final = Nuevo;
+    }
+
+    //En caso de que la lista no este vacia
+    else
+    {
+        Lista->Final->siguiente = Nuevo;
+        Lista->Final = Nuevo;
+    }    
+    printf("Se registro el comportamiento exitosamente \n");
+}
+
+void Agregar_Comportamiento(Registro_Comportamiento *Lista, Registro_Ninos *Lista2, char *nombre_padre, int ID_Nino, char *fecha, char *descripcion, char *indicacion);
+
 void main(){
      Registro_Ninos *Lista_Ninos = (Registro_Ninos *) malloc(sizeof(Registro_Ninos));
      Lista_Ninos->Inicio = NULL;
