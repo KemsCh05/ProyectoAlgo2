@@ -994,6 +994,314 @@ void Eliminar_Juguete_Carta(Registro_Carta *Lista, Juguete *recorrido, char *jug
     printf("No fue posible eliminar el juguete pues no se encontro %s dentro de la carta de %s \n", juguete, nombre);
 }
 
+void Agregar_a_Deseos(Registro_Carta *Lista, Juguete *recorrido, char *juguete, int ID_Nino, char *nombre, int anno, int precio){
+    int validacion = 0;
+
+    // Ciclo para recorrer el árbol de juguetes
+    while (recorrido != NULL && validacion == 0)
+    {
+
+        // En caso de que se encuentre el juguete que coincide con el nombre ingresado
+        if (strcmp(recorrido->nombre, juguete) == 0)
+            validacion++;
+        
+        // En caso de que no se haya encontrado el juguete y el costo ingresado sea mayor al costo del juguete actual
+        else if (precio > recorrido->costo) 
+            recorrido = recorrido->der; 
+        
+        // En caso de que no se haya encontrado el juguete y el costo ingresado sea menor al costo del juguete actual
+        else if (precio < recorrido->costo) 
+            recorrido = recorrido->izq;
+        
+        // En caso de que no se haya encontrado el juguete y el costo ingresado sea igual al costo del juguete actual
+        else
+            recorrido = recorrido->der; 
+    }
+
+        
+    // En caso de que no se haya encontrado ningún juguete que coincida con el nombre ingresado
+    if (recorrido == NULL)
+    {
+        printf("No existe ningun juguete con ese nombre y precio en el catalogo de juguetes. \n");
+        return;
+    }
+    Carta_Santa *puntero = Lista->Inicio;
+    int validacion2 = 0;
+
+    // Ciclo para validar que exista una carta registrada para un niño con la identificación ingresada en ese año
+    while (puntero != NULL && validacion2 == 0)
+    {
+
+        // En caso de que la carta actual esté registrada para el niño en cuestión en ese año
+        if (puntero->ID_Nino == ID_Nino && puntero->anno == anno)
+            validacion2++;
+        
+        // En caso de que la carta actual no esté registrada para el niño en cuestión en ese año
+        if (validacion2 == 0)
+            puntero = puntero->siguiente;
+    }
+
+    // En caso de que no se encuentre ninguna carta registrada para el niño en ese año
+    if (validacion2 == 0)
+    {
+        printf("No fue posible agregar el juguete a la lista de deseos pues no existe ninguna carta registrada para %s en %i \n", nombre, anno);
+        return;
+    }
+
+    // Se crea un nuevo nodo de la lista de deseos del niño
+    Deseos *Nuevo = (Deseos *) malloc(sizeof(Deseos));
+    Nuevo->anterior = NULL;
+    Nuevo->siguiente = NULL;
+    strcpy(Nuevo->juguete, juguete);
+
+    // Si la lista de deseos está vacía
+    if (puntero->Inicio_Deseos == NULL)
+    {
+        puntero->Inicio_Deseos = Nuevo;
+        puntero->Final_Deseos = Nuevo;
+    }
+
+    // Si la lista de deseos no está vacía
+    else
+    {
+        puntero->Final_Deseos->siguiente = Nuevo;
+        Nuevo->anterior = puntero->Final_Deseos;
+        puntero->Final_Deseos = Nuevo;
+    }
+    printf("Se agrego exitosamente %s a la lista de deseos de %s \n", juguete, nombre);
+}
+
+void Eliminar_De_Deseos(Registro_Carta *Lista, Juguete *recorrido, char *juguete, int ID_Nino, char *nombre, int anno, int precio){
+    int validacion = 0;
+
+    // Ciclo para recorrer el árbol de juguetes
+    while (recorrido != NULL && validacion == 0)
+    {
+
+        // En caso de que se encuentre el juguete que coincide con el nombre ingresado
+        if (strcmp(recorrido->nombre, juguete) == 0)
+            validacion++;
+        
+        // En caso de que no se haya encontrado el juguete y el costo ingresado sea mayor al costo del juguete actual
+        else if (precio > recorrido->costo) 
+            recorrido = recorrido->der; 
+        
+        // En caso de que no se haya encontrado el juguete y el costo ingresado sea menor al costo del juguete actual
+        else if (precio < recorrido->costo) 
+            recorrido = recorrido->izq;
+        
+        // En caso de que no se haya encontrado el juguete y el costo ingresado sea igual al costo del juguete actual
+        else
+            recorrido = recorrido->der; 
+    }
+
+    // En caso de que no se haya encontrado ningún juguete que coincida con el nombre ingresado
+    if (recorrido == NULL)
+    {
+        printf("No existe ningun juguete con ese nombre y precio en el catalogo de juguetes. \n");
+        return;
+    }
+    Carta_Santa *puntero = Lista->Inicio;
+    int validacion2 = 0;
+    // Ciclo para validar que exista una carta registrada para un niño con la identificación ingresada en ese año
+    while (puntero != NULL && validacion2 == 0)
+    {
+
+        // En caso de que la carta actual esté registrada para el niño en cuestión en ese año
+        if (puntero->ID_Nino == ID_Nino && puntero->anno == anno)
+            validacion2++;
+        
+        // En caso de que la carta actual no esté registrada para el niño en cuestión en ese año
+        if (validacion2 == 0)
+            puntero = puntero->siguiente;
+    }
+
+    // En caso de que no se encuentre ninguna carta registrada para el niño en ese año
+    if (validacion2 == 0)
+    {
+        printf("No fue posible agregar el juguete a la lista de deseos pues no existe ninguna carta registrada para %s en %i \n", nombre, anno);
+        return;
+    }
+    Deseos *puntero2 = puntero->Inicio_Deseos;
+
+    // Ciclo para recorrer la lista de deseos buscando un juguete que coincida con el nombre de juguete ingresado
+    while (puntero2 != NULL)
+    {
+
+        // En caso de que se encuentre en la carta el juguete (nombre) ingresado
+        if (strcmp(puntero2->juguete, juguete) == 0)
+        {
+
+            // Si el juguete a eliminar es el único en la lista de deseos
+            if (puntero2 == puntero->Inicio_Deseos && puntero2->siguiente == NULL)
+            {
+                puntero->Inicio_Deseos = NULL;
+                free(puntero2);
+            }
+
+            // Si el juguete a eliminar es el inicio de la lista pero no el único en la lista de deseos
+            else if (puntero2 == puntero->Inicio_Deseos && puntero2->siguiente != NULL)
+            {
+                puntero->Inicio_Deseos = puntero2->siguiente;
+                puntero2->siguiente->anterior = NULL;
+                free(puntero2);
+            }
+
+            // En cualquier otro caso
+            else
+            {
+                puntero2->anterior->siguiente = puntero2->siguiente;
+                puntero2->siguiente->anterior = puntero2->anterior;
+                free(puntero2);
+            }
+            printf("Se ha eliminado %s de la lista de deseos de %s exitosamente \n", juguete, nombre);
+            return;
+        }
+        puntero2 = puntero2->siguiente;
+    }
+
+    // En caso de que no se encuentre el juguete en la carta del niño
+    printf("No fue posible eliminar el juguete pues no se encontro %s dentro de la lista de deseos de %s \n", juguete, nombre);
+}
+
+void Consultar_Carta(Registro_Carta *Lista, int ID_Nino, int anno){
+    Carta_Santa *puntero = Lista->Inicio;
+
+    // Ciclo para recorrer la lista de cartas 
+    while (puntero != NULL)
+    {
+
+        // En caso de que la carta actual coincida con la identificación y el año ingresados
+        if (puntero->ID_Nino == ID_Nino && puntero->anno == anno)
+        {
+
+            //Impresión de la información de la carta
+            printf("\n\nCarta a Santa: %s || %i \n\n", puntero->nombre_nino, puntero->anno);
+            int i = 1;
+            Juguete_Carta *puntero2 = puntero->Inicio_Juguetes;
+            printf("Lista de juguetes de la carta: \n");
+
+            // Recorrido por la lista de juguetes de la carta
+            while (puntero2 != NULL)
+            {
+
+                // Impresión de cada juguete de la carta
+                printf("%i. %s \n", i, puntero2->juguete);
+                puntero2 = puntero2->siguiente;
+                i++;
+            }
+            int b = 1;
+            Deseos *puntero3 = puntero->Inicio_Deseos;
+            printf("\nLista de deseos: \n");
+
+            // Recorrido por la lista de deseos
+            while (puntero3 != NULL)
+            {
+
+                // Impresión de cada juguete de la lista de deseos
+                printf("%i. %s \n", b, puntero3->juguete);
+                puntero3 = puntero3->siguiente;
+                b++;
+            }
+            return;
+        }
+        puntero = puntero->siguiente;
+    }
+
+    // En caso de que no se encuentre una carta que coincida con la identificación y el año ingresados
+    printf("No se encontro ninguna carta del nino en ese anno \n");
+}
+
+void De_Deseo_A_Carta(Registro_Carta *Lista, char *juguete, int ID_Nino, int anno){
+    Carta_Santa *puntero = Lista->Inicio;
+
+    // Ciclo para recorrer la lista de cartas
+    while (puntero != NULL)
+    {
+
+        // En caso de que la carta actual coincida con la identificación y el año ingresados
+        if (puntero->ID_Nino == ID_Nino && puntero->anno == anno)
+        {
+            int validacion = 0;
+            Deseos *puntero2 = puntero->Inicio_Deseos;
+
+            // Lista para recorrer cada juguete de la lista de deseos
+            while (puntero2 != NULL && validacion == 0)
+            {
+                if (strcmp(puntero2->juguete, juguete) == 0)
+                    validacion++;
+                if(validacion == 0)
+                    puntero2 = puntero2->siguiente;
+            }
+
+            // En caso de que no se encuentre el juguete dentro de la lista de deseos
+            if (validacion == 0)
+            {
+                printf("No fue posible pasar el juguete a la carta pues no se encuentra dentro de la lista de deseos \n");
+                return;
+            }
+
+            // En caso de que el niño ya tenga 10 juguetes en su carta
+            if (puntero->contador_juguetes == 10)
+            {
+                printf("No fue posible pasar el juguete a la carta pues ya el nino ha alcanzado el numero maximo de juguetes en su carta \n");
+                return;
+            }
+            char copia[30];
+            strcpy(copia, puntero2->juguete);
+
+            // En caso de que el juguete sea el único en la lista de deseos
+            if (puntero2 == puntero->Inicio_Deseos && puntero2->siguiente == NULL)
+            {
+                puntero->Inicio_Deseos = NULL;
+                free(puntero2);
+            }
+
+            // En caso de que el juguete sea el primero en la lista de deseos pero no el único
+            else if (puntero2 == puntero->Inicio_Deseos && puntero2->siguiente != NULL)
+            {
+                puntero->Inicio_Deseos = puntero2->siguiente;
+                puntero2->siguiente->anterior = NULL;
+                free(puntero2);
+            }
+
+            // En cualquier otro caso
+            else
+            {
+                puntero2->anterior->siguiente = puntero2->siguiente;
+                puntero2->siguiente->anterior = puntero2->anterior;
+                free(puntero2);
+            }
+
+            // Creación de un nuevo juguete de la carta
+            Juguete_Carta *Nuevo = (Juguete_Carta *) malloc(sizeof(Juguete_Carta));
+            Nuevo->anterior = NULL;
+            Nuevo->siguiente = NULL;
+            strcpy(Nuevo->estado, "Solicitado");
+            strcpy(Nuevo->juguete, copia);
+
+            // En caso de que la carta no tenga juguetes agregados
+            if (puntero->Inicio_Juguetes == NULL)
+            {
+                puntero->Inicio_Juguetes = Nuevo;
+                puntero->Final_Juguetes = Nuevo;
+            }
+
+            // En caso de que ya hayan juguetes en la carta
+            else
+            {
+                puntero->Final_Juguetes->siguiente = Nuevo;
+                Nuevo->anterior = puntero->Final_Juguetes;
+                puntero->Final_Juguetes = Nuevo;
+            }
+            puntero->contador_juguetes += 1;
+            printf("Se elimino %s de la lista de deseos y se agrego a la carta de %s \n", copia, puntero->nombre_nino);
+            return;
+        }
+        puntero = puntero->siguiente;
+    }
+    printf("No fue posible pasar el juguete a la carta pues no hay ninguna carta registrada para ese nino en ese anno \n");
+}
 
 
 void main(){
