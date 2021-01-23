@@ -1211,7 +1211,6 @@ void Consultar_Carta(Registro_Carta *Lista, int ID_Nino, int anno){
     // En caso de que no se encuentre una carta que coincida con la identificación y el año ingresados
     printf("No se encontro ninguna carta del nino en ese anno \n");
 }
-
 void De_Deseo_A_Carta(Registro_Carta *Lista, char *juguete, int ID_Nino, int anno){
     Carta_Santa *puntero = Lista->Inicio;
 
@@ -1303,6 +1302,314 @@ void De_Deseo_A_Carta(Registro_Carta *Lista, char *juguete, int ID_Nino, int ann
     printf("No fue posible pasar el juguete a la carta pues no hay ninguna carta registrada para ese nino en ese anno \n");
 }
 
+void Entregar_Juguetes(Registro_Lugares *Lista, Registro_Ninos *Lista2, Registro_Carta *Lista3, int decision){
+
+    // En caso de que la entrega se haga para todo tipo de rutas
+    if (decision == 1){
+        Lugar *puntero = Lista->Inicio->siguiente;
+        int contador_lugares = 0;
+
+        // Ciclo para recorrer todos los lugares y validar en cuantos lugares vive al menos un niño con carta aprobada
+        // Se llamará lugar en cuestión a cada uno de los lugares de la lista 
+        while (puntero != NULL)
+        {
+            Carta_Santa *puntero2 = Lista3->Inicio;
+
+            // Ciclo para recorrer cada carta para encontrar un niño con carta aprobada que viva en el lugar en cuestión
+            while (puntero2 != NULL && puntero->ninos == 0)
+            {
+
+                // En caso de que la carta tenga al menos un juguete por entregar
+                if (puntero2->contador_juguetes_a_entregar > 0)
+                {
+                    Ninos *puntero3 = Lista2->Inicio;
+
+                    // Ciclo para recorrer la lista de niños y validar si el niño de la carta vive en lugar en cuestión
+                    while (puntero3 != NULL && puntero->ninos == 0)
+                    {
+
+                        // En caso de que se encuentre el niño de la carta y viva en el lugar en cuestión
+                        if (puntero3->ID == puntero2->ID_Nino && strcmp(puntero3->residencia, puntero->nombre) == 0)
+                        {
+                            puntero->ninos += 1;
+                            contador_lugares++;
+                        }
+                        puntero3 = puntero3->siguiente;
+                    }
+                }
+                puntero2 = puntero2->siguiente;
+            }
+            puntero = puntero->siguiente;
+        }
+        int contador = 0;
+        Lugar *puntero4;
+
+        // Este ciclo se repetirá mientras aún hayan lugares con juguetes por entregar
+        while (contador < contador_lugares)
+        {
+
+            // En caso de que se trate de el primer lugar (lugar de salida) se marca como permanente
+            if (contador == 0){
+                puntero4 = Lista->Inicio;
+                puntero4->visitado_o_permanente += 2;
+            }
+            Ruta *puntero5 = puntero4->Inicio;
+
+            //  Ciclo para visitar cada nodo adyacente y ver si se puede acortar el camino
+            while (puntero5 != NULL)
+            {
+                Lugar *buscar = Lista->Inicio;
+
+                // Buscar en la lista de lugares el destino
+                while (strcmp(buscar->nombre, puntero5->destino->nombre) != 0)
+                    buscar = buscar->siguiente;
+
+                Lugar *buscar2 = Lista->Inicio;
+
+                // Buscar en la lista de lugares el origen
+                while (strcmp(buscar2->nombre, puntero5->origen->nombre) != 0)
+                    buscar2 = buscar2->siguiente;
+
+                // En caso de que el nodo adyacente no haya sido visitado o el camino sea más corto, y el nodo adyacente no tenga etiqueta permanente y tenga al menos un niño con carta aprobada
+                if ((buscar->visitado_o_permanente == 0 || buscar->distancia_acumulada > buscar2->distancia_acumulada + puntero5->minutos) && buscar->ninos > 0 && buscar->visitado_o_permanente != 2)
+                {
+
+                    // El origen se convierte en el nuevo antecesor del nodo adyacente
+                    buscar->antecesor = buscar2;
+
+                    // La nueva distancia acumulada es la distancia acumulada del antecesor más la duración de la ruta 
+                    // Se marca el nodo como visitado en caso de que no se haya visitado antes
+                    buscar->distancia_acumulada = buscar2->distancia_acumulada + puntero5->minutos;
+                    if (buscar->visitado_o_permanente == 0)
+                        buscar->visitado_o_permanente += 1;
+                }
+                puntero5 = puntero5->siguiente;                
+            }
+            Lugar *puntero6 = Lista->Inicio->siguiente;
+            Lugar *menor;
+            int validacion = 0;
+
+            // Ciclo para recorrer la lista de lugares y buscar el nodo visitado de menor distancia acumulada
+            while (puntero6 != NULL)
+            {
+
+                // En caso de que se trate del primer lugar evaluado y sea un nodo visitado se convierte en el menor
+                if (validacion == 0 && puntero6->visitado_o_permanente == 1)
+                {
+                    menor = puntero6;
+                    validacion++;
+                }
+
+                // En caso de que ya se haya evaluado al menos un lugar
+                else
+                {
+
+                    // En caso de que la distancia acumulada sea menor a la del menor y que se tarte de un nodo visitado
+                    if (puntero6->distancia_acumulada < menor->distancia_acumulada && puntero6->visitado_o_permanente == 1)
+                        menor = puntero6;
+                }
+                puntero6 = puntero6->siguiente;
+            }
+            Lugar *buscar3 = Lista->Inicio;
+
+            // Ciclo para buscar el nodo menor en la lista de lugares
+            while (strcmp(buscar3->nombre, menor->nombre) != 0)
+                buscar3 = buscar3->siguiente;
+
+            // Se marca al nodo menor como permanente y se asigna puntero4 para visitar sus adyacentes
+            puntero4 = buscar3;
+            buscar3->visitado_o_permanente++;
+
+            int contador2 = 1;
+            printf("\n\nViaje desde %s hasta %s \nEntregando regalos a los siguientes ninos: \n", buscar3->antecesor->nombre, buscar3->nombre);
+            Ninos *puntero7 = Lista2->Inicio;
+
+            // Ciclo para imprimir los nombres de los niños a los que se les entregará regalos en dicho lugar
+            while (puntero7 != NULL)
+            {
+
+                // En caso de que se encuentre un niño que viva en dicho lugar se imprimen sus datos
+                if (strcmp(puntero7->residencia, buscar3->nombre) == 0)
+                {
+                    printf("%i. %s \n", contador2, puntero7->nombre);
+                    contador2++;
+                }
+                puntero7 = puntero7->siguiente;
+            }
+            contador++;
+        }
+    }
+
+    // En caso de que la entrega se haga para solo un tipo de rutas
+    if (decision == 2)
+    {
+
+        // Se solicita el tipo de ruta al que se entregarán regalos
+        char tipo_ruta[10];
+        printf("Ingrese el tipo de ruta a la que desea entregar los juguetes: \n");
+        scanf("%s", &tipo_ruta);
+
+        // En caso de que no se trate de una ruta aérea, marítima o terrestre
+        if (strcmp(tipo_ruta, "Maritima") != 0 && strcmp(tipo_ruta, "maritima") != 0 && strcmp(tipo_ruta, "Marítima") != 0 && strcmp(tipo_ruta, "marítima") != 0 && strcmp(tipo_ruta, "Aerea") != 0 && strcmp(tipo_ruta, "aerea") != 0 && strcmp(tipo_ruta, "Aérea") != 0 && strcmp(tipo_ruta, "aérea") != 0 && strcmp(tipo_ruta, "Terrestre") != 0 && strcmp(tipo_ruta, "terrestre") != 0){
+            printf("Solo se puede hacer entregas para las siguientes rutas: aerea, terrestre o maritima \n\n");
+            return;
+        }
+
+        Lugar *puntero = Lista->Inicio->siguiente;
+        int contador_lugares = 0;
+
+        // Ciclo para recorrer todos los lugares y validar en cuantos lugares vive al menos un niño con carta aprobada
+        // Se llamará lugar en cuestión a cada uno de los lugares de la lista
+        while (puntero != NULL)
+        {
+            Carta_Santa *puntero2 = Lista3->Inicio;
+
+            // Ciclo para recorrer cada carta para encontrar un niño con carta aprobada que viva en el lugar en cuestión
+            while (puntero2 != NULL && puntero->ninos == 0)
+            {
+
+                // En caso de que la carta tenga al menos un juguete por entregar
+                if (puntero2->contador_juguetes_a_entregar != 0)
+                {
+                    Ninos *puntero3 = Lista2->Inicio;
+
+                    // Ciclo para recorrer la lista de niños y validar si el niño de la carta vive en lugar en cuestión
+                    while (puntero3 != NULL && puntero->ninos == 0)
+                    {
+
+                        // En caso de que se encuentre el niño de la carta y viva en el lugar en cuestión
+                        if (puntero3->ID == puntero2->ID_Nino && strcmp(puntero3->residencia, puntero->nombre) == 0)
+                        {
+                            Lugar *validar = Lista->Inicio;
+                            int val = 0;
+
+                            // Ciclo para validar que el lugar sea de la ruta especificada
+                            while (validar != NULL && val == 0)
+                            {
+                                Ruta *validar2 = validar->Inicio;
+
+                                // Ciclo para recorrer las rutas para validar que el lugar sea de la ruta especificada
+                                while (validar2 != NULL && val == 0)
+                                {
+
+                                    // En los casos de que el lugar esté conectado por la ruta especificada
+                                    if (strcmp(puntero->nombre, validar2->destino->nombre) == 0 && strcmp(validar2->tipo, tipo_ruta) == 0)
+                                    {
+                                        val++;
+                                        puntero->ninos += 1;
+                                        contador_lugares++;
+                                    }
+                                    validar2 = validar2->siguiente;
+                                }
+                                validar = validar->siguiente;
+                            }
+                        }
+                        puntero3 = puntero3->siguiente;
+                    }
+                }
+                puntero2 = puntero2->siguiente;
+            }
+            puntero = puntero->siguiente;
+        }
+        int contador = 0;
+        Lugar *puntero4;
+
+        // Este ciclo se repetirá mientras aún hayan lugares con juguetes por entregar
+        while (contador < contador_lugares)
+        {
+
+            // En caso de que se trate de el primer lugar (lugar de salida) se marca como permanente
+            if (contador == 0){
+                puntero4 = Lista->Inicio;
+                puntero4->visitado_o_permanente += 2;
+            }
+            Ruta *puntero5 = puntero4->Inicio;
+
+            //  Ciclo para visitar cada nodo adyacente y ver si se puede acortar el camino
+            while (puntero5 != NULL)
+            {
+                Lugar *buscar = Lista->Inicio;
+
+                // Buscar en la lista de lugares el destino
+                while (strcmp(buscar->nombre, puntero5->destino->nombre) != 0)
+                    buscar = buscar->siguiente;
+
+                Lugar *buscar2 = Lista->Inicio;
+
+                // Buscar en la lista de lugares el origen
+                while (strcmp(buscar2->nombre, puntero5->origen->nombre) != 0)
+                    buscar2 = buscar2->siguiente;
+
+                // En caso de que el nodo adyacente no haya sido visitado o el camino sea más corto, y el nodo adyacente no tenga etiqueta permanente y tenga al menos un niño con carta aprobada
+                if ((buscar->visitado_o_permanente == 0 || buscar->distancia_acumulada > buscar2->distancia_acumulada + puntero5->distancia) && buscar->ninos > 0 && buscar->visitado_o_permanente != 2 && strcmp(puntero5->tipo, tipo_ruta) == 0)
+                {
+
+                    // El origen se convierte en el nuevo antecesor del nodo adyacente
+                    buscar->antecesor = buscar2;
+
+                    // La nueva distancia acumulada es la distancia acumulada del antecesor más la duración de la ruta 
+                    // Se marca el nodo como visitado en caso de que no se haya visitado antes
+                    buscar->distancia_acumulada = buscar2->distancia_acumulada + puntero5->distancia;
+                    if (buscar->visitado_o_permanente == 0)
+                        buscar->visitado_o_permanente += 1;
+                }
+                puntero5 = puntero5->siguiente;                
+            }
+            Lugar *puntero6 = Lista->Inicio->siguiente;
+            Lugar *menor;
+            int validacion = 0;
+
+            // Ciclo para recorrer la lista de lugares y buscar el nodo visitado de menor distancia acumulada
+            while (puntero6 != NULL)
+            {
+
+                // En caso de que se trate del primer lugar evaluado y sea un nodo visitado se convierte en el menor
+                if (validacion == 0 && puntero6->visitado_o_permanente == 1)
+                {
+                    menor = puntero6;
+                    validacion++;
+                }
+
+                // En caso de que ya se haya evaluado al menos un lugar
+                else
+                {
+
+                    // En caso de que la distancia acumulada sea menor a la del menor y que se tarte de un nodo visitado
+                    if (puntero6->distancia_acumulada < menor->distancia_acumulada && puntero6->visitado_o_permanente == 1)
+                        menor = puntero6;
+                }
+                puntero6 = puntero6->siguiente;
+            }
+            Lugar *buscar3 = Lista->Inicio;
+
+            // Ciclo para buscar el nodo menor en la lista de lugares
+            while (strcmp(buscar3->nombre, menor->nombre) != 0)
+                buscar3 = buscar3->siguiente;
+
+            // Se marca al nodo menor como permanente y se asigna puntero4 para visitar sus adyacentes
+            puntero4 = buscar3;
+            buscar3->visitado_o_permanente++;
+
+            int contador2 = 1;
+            printf("\n\nViaje desde %s hasta %s \nEntregando regalos a los siguientes ninos: \n", buscar3->antecesor->nombre, buscar3->nombre);
+            Ninos *puntero7 = Lista2->Inicio;
+
+            // Ciclo para imprimir los nombres de los niños a los que se les entregará regalos en dicho lugar
+            while (puntero7 != NULL)
+            {
+
+                // En caso de que se encuentre un niño que viva en dicho lugar se imprimen sus datos
+                if (strcmp(puntero7->residencia, buscar3->nombre) == 0)
+                {
+                    printf("%i. %s \n", contador2, puntero7->nombre);
+                    contador2++;
+                }
+                puntero7 = puntero7->siguiente;
+            }
+            contador++;
+        }
+    }
+}
 
 void main(){
      Registro_Ninos *Lista_Ninos = (Registro_Ninos *) malloc(sizeof(Registro_Ninos));
